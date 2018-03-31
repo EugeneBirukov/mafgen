@@ -1,0 +1,2 @@
+# mafgen
+Mafia Tournament Generator
