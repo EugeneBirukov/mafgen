@@ -4,7 +4,7 @@
 //  Copyright (c) Eugene Birukov, 2018
 //
 // Program configuration.
-
+//
 #include "stdafx.h"
 #include "Configuration.h"
 
@@ -44,7 +44,7 @@ Configuration::~Configuration()
 }
 
 //----------------------------------------------------------------------
-// Parse command line and initialize the random number generator
+// Parse command line 
 //
 bool Configuration::Parse(int argc, char ** argv)
 {
