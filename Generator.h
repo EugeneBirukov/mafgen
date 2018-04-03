@@ -18,25 +18,79 @@ public:
     Generator(
         unsigned players,
         unsigned tables,
-        unsigned games,
+        unsigned perTableGames,
+        unsigned tableGames,
         unsigned playerGames);
     
     // Destructor
     //
     ~Generator();
 
+    // Generate the tournament table
+    //
+    void Generate();
+
 private:
+
+    // The type for the list of players
+    //
+    using Players = std::vector<unsigned>;
+
+    // Get players who has not played 'playerGame'
+    //
+    void GetPlayersForGame(Selector<Player *> &players);
+
+    // Select players for one game at all tables
+    //
+    Selector<Player*> SelectPlayersForGame();
 
     // The list of players
     //
-    std::vector<Player> player;
+    std::vector<Player> allPlayers;
 
-    // The table of cross-player penalty pretty much keeps the count
-    // of how many times two players met at the same table.
+    // The list of all tables
     //
-    // Note: In theory we need only one triangle of this table, but
-    // in practice it is more convenient to have the full square.
+    std::vector<Table> allTables;
+
+    // The number of players
     //
-    std::vector<std::vector<unsigned>> crossPlayerPenalty;
+    const unsigned PlayerCount;
+
+    // The number of tables
+    //
+    const unsigned TableCount;
+
+    // The number of games per table
+    // 
+    const unsigned PerTableGameCount;
+
+    // The number of table games
+    //
+    const unsigned TableGameCount;
+
+    // The number of player games
+    //
+    const unsigned PlayerGameCount;
+
+    // The number of seats to generate
+    //
+    const unsigned SeatCount;
+
+    // Current seat
+    //
+    unsigned seat;
+
+    // Current player's game being generated
+    //
+    unsigned playerGame;
+
+    // Current per-table game being generated
+    //
+    unsigned tableGame;
+
+    // The number of players to play simultaneously at all tables
+    // Note: in the last game some tables may be inactive.
+    //
+    unsigned playerMax;
 };
 

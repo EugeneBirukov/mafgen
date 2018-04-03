@@ -6,7 +6,6 @@
 // A tournament game.
 //
 #include "stdafx.h"
-#include "Game.h"
 
 //----------------------------------------------------------------------
 // Constructor

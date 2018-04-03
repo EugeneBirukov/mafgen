@@ -6,7 +6,6 @@
 // Program configuration.
 //
 #include "stdafx.h"
-#include "Configuration.h"
 
 //----------------------------------------------------------------------
 // The parser data
@@ -15,7 +14,7 @@ Configuration::Key Configuration::keys[] =
 {
     {"-p", "--players", &Configuration::players, "The number of players"},
     {"-t", "--tables",  &Configuration::tables,  "The number of tables played simultaneously"},
-    {"-g", "--games",   &Configuration::games,   "The number of games per tournament"},
+    {"-g", "--games",   &Configuration::tableGames,   "The number of games per tournament"},
     {"-s", "--seed",    &Configuration::seed,    "The random number seed"},
 };
 
@@ -30,7 +29,7 @@ Configuration::Configuration()
     //
     players = 10;
     tables = 1;
-    games = 1;
+    tableGames = 1;
     playerGames = 1;
     seed = static_cast<unsigned>(time(nullptr));
 }
@@ -97,7 +96,7 @@ bool Configuration::Parse(int argc, char ** argv)
 
     // Calculate the number of rounds and player games
     //
-    unsigned rounds = games / minGames;
+    unsigned rounds = tableGames / minGames;
     playerGames = rounds * minPlayerGames;
 
     // Check sanity
@@ -117,9 +116,9 @@ bool Configuration::Parse(int argc, char ** argv)
         std::cerr << "Error: too few players " << players << " for " << tables << " tables" << std::endl;
         result = false;
     }       
-    if (games % minGames != 0)
+    if (tableGames % minGames != 0)
     {
-        std::cerr << "Error: invalid number of games " << games << ". ";
+        std::cerr << "Error: invalid number of games " << tableGames << ". ";
         std::cerr << "Correct value would be " << (rounds + 1) * minGames << std::endl;
         result = false;
     }
@@ -150,14 +149,65 @@ void Configuration::PrintUsage()
 }
 
 //----------------------------------------------------------------------
+// Get the number of players
+//
+unsigned Configuration::GetPlayers() const
+{
+    return players;
+}
+
+//----------------------------------------------------------------------
+// Get the number of tables
+//
+unsigned Configuration::GetTables() const
+{
+    return tables;
+}
+
+//----------------------------------------------------------------------
+// Get the number of table games
+//
+unsigned Configuration::GetTableGames() const
+{
+    return tableGames;
+}
+
+//----------------------------------------------------------------------
+// Get the number of per-table games
+//
+unsigned Configuration::GetPerTableGames() const
+{
+    // Some tables might be empty during last game
+    //
+    return (tableGames + tables - 1) / tables;
+}
+
+//----------------------------------------------------------------------
+// Get the number of per-table games
+//
+unsigned Configuration::GetPlayerGames() const
+{
+    return playerGames;
+}
+
+//----------------------------------------------------------------------
+// Get RNG seed
+//
+unsigned Configuration::GetSeed() const
+{
+    return seed;
+}
+
+//----------------------------------------------------------------------
 // Print configuration
 //
 void Configuration::PrintConfiguration()
 {
     std::cout << "Configuration:" << std::endl;
-    std::cout << "    Players:          " << std::setw(4) << std::right << players << std::endl;
-    std::cout << "    Tables:           " << std::setw(4) << std::right << tables << std::endl;
-    std::cout << "    Games:            " << std::setw(4) << std::right << games << std::endl;
-    std::cout << "    Games per player: " << std::setw(4) << std::right << playerGames << std::endl;
-    std::cout << "    RNG Seed:         " << seed << std::endl;
+    std::cout << "    Players:          " << std::setw(12) << std::right << players << std::endl;
+    std::cout << "    Tables:           " << std::setw(12) << std::right << tables << std::endl;
+    std::cout << "    Games:            " << std::setw(12) << std::right << tableGames << std::endl;
+    std::cout << "    Games per player: " << std::setw(12) << std::right << playerGames << std::endl;
+    std::cout << "    Games per table:  " << std::setw(12) << std::right << GetPerTableGames() << std::endl;
+    std::cout << "    RNG Seed:         " << std::setw(12) << std::right << seed << std::endl;
 }

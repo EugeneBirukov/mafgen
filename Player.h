@@ -15,11 +15,15 @@ public:
 
     // Constructor
     //
-    Player(unsigned games);
+    Player(unsigned playerCount, unsigned tableGameCount);
 
     // Destructor
     //
     ~Player();
+
+    // Initialize player
+    //
+    void Initialize(unsigned newId);
 
     // Assign a seat for a game
     //
@@ -27,17 +31,45 @@ public:
 
     // Get zone penalty for the seatNo
     //
-    unsigned GetZonePenalty(unsigned seatNo);
+    unsigned GetZonePenalty(unsigned seatNo) const
+    {
+        return zonePenalty[Seat::GetZoneNo(seatNo)];
+    }
 
-    // Getters
+    // Get cross-player penalty
     //
-    unsigned GetGameCount();
+    unsigned GetPlayerPenalty(unsigned playerId) const
+    {
+        return playerPenalty[playerId];
+    }
+            
+    // Get game count
+    //
+    unsigned GetGameCount() const
+    {
+        return gameCount;
+    }
+
+    // Get player ID
+    //
+    unsigned GetId() const
+    {
+        return id;
+    }
 
 private:
 
+    // Player ID
+    //
+    unsigned id;
+
     // Seat assignments for the tournament
     //
-    std::vector<Seat> seat;
+    std::vector<Seat> seats;
+
+    // Accumulated cross-player penalty
+    //
+    std::vector<unsigned> playerPenalty;
 
     // Accumulated zone penalty
     //

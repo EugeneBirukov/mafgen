@@ -47,38 +47,35 @@ public:
     //
     void PrintConfiguration();
 
-    // Getters
+    // Get the number of players
     //
-    unsigned GetPlayers()
-    {
-        return players;
-    }
+    unsigned GetPlayers() const;
 
-    unsigned GetTables()
-    {
-        return tables;
-    }
+    // Get the number of tables
+    //
+    unsigned GetTables() const;
 
-    unsigned GetGames()
-    {
-        return games;
-    }
+    // Get the number of table games
+    //
+    unsigned GetTableGames() const;
 
-    unsigned GetPlayerGames()
-    {
-        return playerGames;
-    }
+    // Get the number of per-table games
+    //
+    unsigned GetPerTableGames() const;
 
-    unsigned GetSeed()
-    {
-        return seed;
-    }
+    // Get the number of player games
+    //
+    unsigned GetPlayerGames() const;
+
+    // Get RNG seed
+    //
+    unsigned GetSeed() const;
 
 private:
 
     unsigned players;       // The number of players
     unsigned tables;        // The number of tables played simultaneously
-    unsigned games;         // The number of games
+    unsigned tableGames;    // The number of games
     unsigned playerGames;   // The number of games per player
     unsigned seed;          // The random number generator seed
     static Key keys[];      // The parser data

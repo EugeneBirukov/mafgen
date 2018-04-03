@@ -6,8 +6,6 @@
 // A tournament table.
 //
 #include "stdafx.h"
-#include "Game.h"
-#include "Table.h"
 
 Table::Table(unsigned games)
 {

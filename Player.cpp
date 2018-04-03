@@ -12,10 +12,14 @@
 //----------------------------------------------------------------------
 // Constructor
 //
-Player::Player(unsigned games) :
-    seat(games),
-    gameCount(0)
+Player::Player(unsigned playerCount, unsigned tableGameCount) :
+    seats(tableGameCount),
+    id(0),
+    gameCount(0),
+    playerPenalty(playerCount + 1, 0)
 {
+    // Initialize zonePenalty array
+    //
     for (unsigned zoneNo = 0; zoneNo < Seat::Zones; ++zoneNo)
     {
         zonePenalty[zoneNo] = 0;
@@ -30,6 +34,15 @@ Player::~Player()
 }
 
 //----------------------------------------------------------------------
+// Initialize player
+//
+void Player::Initialize(unsigned newId)
+{
+    assert(id == 0);
+    id = newId;
+}
+
+//----------------------------------------------------------------------
 // Assign seat for a game
 //
 void Player::AssignSeat(unsigned gameNo, unsigned tableNo, unsigned seatNo)
@@ -38,7 +51,7 @@ void Player::AssignSeat(unsigned gameNo, unsigned tableNo, unsigned seatNo)
 
     // Assign seat
     //
-    seat[gameNo] = Seat(tableNo, seatNo);
+    seats[gameNo] = Seat(tableNo, seatNo);
     
     // Add penalty for the seat zone
     //
@@ -46,18 +59,3 @@ void Player::AssignSeat(unsigned gameNo, unsigned tableNo, unsigned seatNo)
     ++gameCount;
 }
 
-//----------------------------------------------------------------------
-// Get zone penalty for the seatNo
-//
-unsigned Player::GetZonePenalty(unsigned seatNo)
-{
-    return zonePenalty[Seat::GetZoneNo(seatNo)];
-}
-
-//----------------------------------------------------------------------
-// Get game count
-//
-unsigned Player::GetGameCount()
-{
-    return gameCount;
-}
