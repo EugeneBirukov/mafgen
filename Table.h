@@ -15,14 +15,33 @@ public:
 
     // Constructor
     //
-    Table(unsigned games);
+    Table(unsigned perTableGameCount);
 
     // Destructor
     //
     ~Table();
 
+    // Initialize table
+    //
+    void Initialize(unsigned newId);
+
+    // Get penalty for placing the player at this table
+    //
+    unsigned GetPenalty(unsigned tableGame, Player* player);
+
+    // Assign the player to the table
+    //
+    void AssignSeat(unsigned tableGame, Player* player);
+
 private:
 
-    std::vector<Game> game;
+    // table ID, starts from 1
+    //
+    unsigned id;
+
+    // All the games at this table
+    // Note: some tables may have last game empty 
+    //
+    std::vector<Game> allGames;
 };
 

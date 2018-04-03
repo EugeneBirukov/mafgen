@@ -23,17 +23,12 @@ public:
 
     // Player accessor
     //
-    unsigned& operator[](unsigned seatNo)
-    {
-        // Seat numbering starts with 1
-        //
-        return player[seatNo - 1];
-    }
+    Player*& operator[](unsigned seat);
 
 private:
 
     // 10 players per game
     //
-    unsigned player[10];
+    Player* players[10];
 };
 

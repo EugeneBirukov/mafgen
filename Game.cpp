@@ -12,6 +12,10 @@
 //
 Game::Game()
 {
+    for (unsigned seat = 0; seat < 10; ++seat)
+    {
+        players[seat] = nullptr;
+    }
 }
 
 //----------------------------------------------------------------------
@@ -19,4 +23,12 @@ Game::Game()
 //
 Game::~Game()
 {
+}
+
+//----------------------------------------------------------------------
+// Player accessor
+//
+Player*& Game::operator[](unsigned seat)
+{
+    return players[seat];
 }

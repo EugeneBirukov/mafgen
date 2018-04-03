@@ -18,9 +18,9 @@ public:
     static constexpr unsigned Break = 0;
 
     // The number of zones:
-    // Break, 1..3, 4..7, 8..10
+    // 1..3, 4..7, 8..10
     //
-    static constexpr unsigned Zones = 4;
+    static constexpr unsigned Zones = 3;
 
     // Get zone number 
     //

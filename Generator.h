@@ -78,7 +78,7 @@ private:
 
     // Current seat
     //
-    unsigned seat;
+    unsigned seats;
 
     // Current player's game being generated
     //

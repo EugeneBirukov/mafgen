@@ -31,35 +31,27 @@ public:
 
     // Get zone penalty for the seatNo
     //
-    unsigned GetZonePenalty(unsigned seatNo) const
-    {
-        return zonePenalty[Seat::GetZoneNo(seatNo)];
-    }
+    unsigned GetZonePenalty(unsigned seatNo) const;
 
     // Get cross-player penalty
     //
-    unsigned GetPlayerPenalty(unsigned playerId) const
-    {
-        return playerPenalty[playerId];
-    }
+    unsigned GetPlayerPenalty(Player* player) const;
             
+    // Increment cross-player penalty
+    //
+    void AddPlayerPenalty(Player* player);
+
     // Get game count
     //
-    unsigned GetGameCount() const
-    {
-        return gameCount;
-    }
+    unsigned GetGameCount() const;
 
     // Get player ID
     //
-    unsigned GetId() const
-    {
-        return id;
-    }
-
+    unsigned GetId() const;
+    
 private:
 
-    // Player ID
+    // Player ID, starts from 1
     //
     unsigned id;
 

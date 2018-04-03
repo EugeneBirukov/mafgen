@@ -22,17 +22,24 @@ Generator::Generator(
     PlayerGameCount(playerGameCount),
     SeatCount(tableGameCount * 10),
     TableGameCount(tableGameCount),
-    allPlayers(playerCount, Player(playerCount, tableGameCount)),
+    allPlayers(playerCount, Player(playerCount, perTableGameCount)),
     allTables(tableCount, Table(perTableGameCount)),
     playerGame(0),
     tableGame(0),
-    seat(0)
+    seats(0)
 {
     // Initialize all players
     //
     for (unsigned index = 0; index < playerCount; ++index)
     {
         allPlayers[index].Initialize(index + 1);
+    }
+
+    // Initialize all tables
+    //
+    for (unsigned index = 0; index < tableCount; ++index)
+    {
+        allTables[index].Initialize(index + 1);
     }
 }
 
@@ -55,18 +62,49 @@ void Generator::Generate()
         // The number of players to play simultaneously at all tables
         // Note: in the last game some tables may be inactive.
         //
-        playerMax = std::min(TableCount * 10, SeatCount - seat);
+        playerMax = std::min(TableCount * 10, SeatCount - seats);
+        unsigned tableMax = playerMax / 10;
 
         // Select players for the game
         //
         Selector<Player*> players = SelectPlayersForGame();
 
-        // TODO:
+        // Assign players to tables
+        //
         for (unsigned i = 0; i < playerMax; ++i)
         {
+            // Pick a random player
+            //
             auto player = players.PickOne();
-            player->AssignSeat(tableGame, 1, 1);
-            ++seat;
+
+            // Calculate table penalty
+            //
+            unsigned currentPenalty = std::numeric_limits<unsigned>::max();
+            for (unsigned tableNo = 0; tableNo < tableMax; ++tableNo)
+            {
+                Table* table = &allTables[tableNo];
+                unsigned penalty = table->GetPenalty(tableGame, player);
+                currentPenalty = std::min(penalty, currentPenalty);
+            }
+
+            // Choose table
+            //
+            Selector<Table*> tables;
+            for (unsigned tableNo = 0; tableNo < tableMax; ++tableNo)
+            {
+                Table* table = &allTables[tableNo];
+                unsigned penalty = table->GetPenalty(tableGame, player);
+                if (penalty == currentPenalty)
+                {
+                    tables.push_back(table);
+                }
+            }
+
+            // Assign the player to the table
+            //
+            Table* table = tables.PickOne();
+            table->AssignSeat(tableGame, player);
+            ++seats;
         }
 
         // Done, advance the counter
