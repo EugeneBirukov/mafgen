@@ -32,3 +32,11 @@ Player*& Game::operator[](unsigned seat)
 {
     return players[seat];
 }
+
+//----------------------------------------------------------------------
+// Player accessor
+//
+const Player* Game::operator[](unsigned seat) const
+{
+    return players[seat];
+}

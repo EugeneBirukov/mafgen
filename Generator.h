@@ -30,6 +30,14 @@ public:
     //
     void Generate();
 
+    // Print table assignments
+    //
+    void PrintTables();
+
+    // Print player seats
+    //
+    void PrintPlayers();
+
 private:
 
     // The type for the list of players

@@ -20,9 +20,16 @@ Player::Player(unsigned playerCount, unsigned perTableGameCount) :
 {
     // Initialize zonePenalty array
     //
-    for (unsigned zoneNo = 0; zoneNo < Seat::Zones; ++zoneNo)
+    for (unsigned zone = 0; zone < Seat::Zones; ++zone)
     {
-        zonePenalty[zoneNo] = 0;
+        zonePenalty[zone] = 0;
+    }
+
+    // Initialize seatPenalty array
+    //
+    for (unsigned seat = 0; seat < Seat::Seats; ++seat)
+    {
+        seatPenalty[seat] = 0;
     }
 }
 
@@ -53,20 +60,24 @@ void Player::AssignSeat(unsigned game, unsigned tableNo, unsigned seatNo)
     //
     seats[game] = Seat(tableNo, seatNo);
     
-    // Add penalty for the seat zone
+    // Add penalty for the seat and zone
     //
-    ++zonePenalty[Seat::GetZoneNo(seatNo) - 1];
+    zonePenalty[Seat::GetZoneNo(seatNo) - 1] += 4;
+    ++seatPenalty[seatNo - 1];
+
+    // Done with this game
+    //
     ++gameCount;
 }
 
 //----------------------------------------------------------------------
 // Get zone penalty for the seatNo
 //
-unsigned Player::GetZonePenalty(unsigned seat) const
+unsigned Player::GetSeatPenalty(unsigned seat) const
 {
     unsigned seatNo = seat + 1;
     unsigned zoneNo = Seat::GetZoneNo(seatNo);
-    return zonePenalty[zoneNo - 1];
+    return zonePenalty[zoneNo - 1] + seatPenalty[seatNo - 1];
 }
 
 //----------------------------------------------------------------------
@@ -100,4 +111,12 @@ unsigned Player::GetGameCount() const
 unsigned Player::GetId() const
 {
     return id;
+}
+
+//----------------------------------------------------------------------
+// Seat accessor
+//
+const Seat& Player::operator[](unsigned game)
+{
+    return seats[game];
 }

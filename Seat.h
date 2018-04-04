@@ -17,6 +17,10 @@ public:
     //
     static constexpr unsigned Break = 0;
 
+    // The number of seats:
+    //
+    static constexpr unsigned Seats = 10;
+
     // The number of zones:
     // 1..3, 4..7, 8..10
     //
@@ -38,11 +42,19 @@ public:
     //
     ~Seat();
 
+    // Get table
+    //
+    unsigned GetTable() const;
+
+    // Get seat
+    //
+    unsigned GetSeat() const;
+
 private:
 
-    // Seat zones: Break, 1..3, 4..7, 8..10
+    // Seat zones: 1..3, 4..7, 8..10
     //
-    static unsigned zone[1 + 10];
+    static unsigned zone[1 + Seat::Seats];
 
     // Table No: Break, 1..tables
     //
@@ -53,3 +65,6 @@ private:
     unsigned seat;
 };
 
+// Output operator
+//
+std::ostream& operator<< (std::ostream& os, const Seat& seat);

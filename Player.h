@@ -31,7 +31,7 @@ public:
 
     // Get zone penalty for the seatNo
     //
-    unsigned GetZonePenalty(unsigned seatNo) const;
+    unsigned GetSeatPenalty(unsigned seatNo) const;
 
     // Get cross-player penalty
     //
@@ -48,6 +48,8 @@ public:
     // Get player ID
     //
     unsigned GetId() const;
+
+    const Seat& operator[](unsigned game);
     
 private:
 
@@ -66,6 +68,10 @@ private:
     // Accumulated zone penalty
     //
     unsigned zonePenalty[Seat::Zones];
+
+    // Accumulated seat penalty
+    //
+    unsigned seatPenalty[Seat::Seats];
 
     // Games assigned
     //

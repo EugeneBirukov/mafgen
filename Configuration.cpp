@@ -210,4 +210,5 @@ void Configuration::PrintConfiguration()
     std::cout << "    Games per player: " << std::setw(12) << std::right << playerGames << std::endl;
     std::cout << "    Games per table:  " << std::setw(12) << std::right << GetPerTableGames() << std::endl;
     std::cout << "    RNG Seed:         " << std::setw(12) << std::right << seed << std::endl;
+    std::cout << std::endl;
 }

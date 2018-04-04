@@ -25,6 +25,10 @@ public:
     //
     Player*& operator[](unsigned seat);
 
+    // Player accessor
+    //
+    const Player* operator[](unsigned seat) const;
+
 private:
 
     // 10 players per game

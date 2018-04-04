@@ -20,7 +20,7 @@ Generator::Generator(
     TableCount(tableCount),
     PerTableGameCount(perTableGameCount),
     PlayerGameCount(playerGameCount),
-    SeatCount(tableGameCount * 10),
+    SeatCount(tableGameCount * Seat::Seats),
     TableGameCount(tableGameCount),
     allPlayers(playerCount, Player(playerCount, perTableGameCount)),
     allTables(tableCount, Table(perTableGameCount)),
@@ -62,8 +62,8 @@ void Generator::Generate()
         // The number of players to play simultaneously at all tables
         // Note: in the last game some tables may be inactive.
         //
-        playerMax = std::min(TableCount * 10, SeatCount - seats);
-        unsigned tableMax = playerMax / 10;
+        playerMax = std::min(TableCount * Seat::Seats, SeatCount - seats);
+        unsigned tableMax = playerMax / Seat::Seats;
 
         // Select players for the game
         //
@@ -164,4 +164,110 @@ Selector<Player*> Generator::SelectPlayersForGame()
     // Return it to the caller
     //
     return players;
+}
+
+//----------------------------------------------------------------------
+// Print table assignments
+//
+void Generator::PrintTables()
+{
+    // Print header 1
+    //
+    for (unsigned tableNo = 0; tableNo < TableCount; ++tableNo)
+    {
+        std::cout << "TABLE " << std::setw(2) << tableNo + 1 << "                                    ";
+    }
+    std::cout << std::endl;
+
+    // Print header 2
+    //
+    for (unsigned tableNo = 0; tableNo < TableCount; ++tableNo)
+    {
+        for (unsigned seat = 0; seat < Seat::Seats; ++seat)
+        {
+            std::cout << std::setw(4) << seat + 1;
+        }
+
+        std::cout << "    ";
+    }
+    std::cout << std::endl;
+
+    // Print header 3
+    //
+    for (unsigned tableNo = 0; tableNo < TableCount; ++tableNo)
+    {                
+        for (unsigned seat = 0; seat < Seat::Seats; ++seat)
+        {
+            std::cout << "----";
+        }
+
+        std::cout << "    ";
+    }
+    std::cout << std::endl;
+
+    // Print assignments
+    //
+    for (unsigned game = 0; game < PerTableGameCount; ++game)
+    {
+        for (unsigned tableNo = 0; tableNo < TableCount; ++tableNo)
+        {
+            // Get table
+            //
+            Table& table = allTables[tableNo];
+
+            // See if this table is empty (on the last game)
+            //
+            if (table[game][0] == nullptr)
+            {
+                break;
+            }
+
+            // Print assignments
+            //
+            for (unsigned seat = 0; seat < Seat::Seats; ++seat)
+            {
+                std::cout << std::setw(4) << table[game][seat]->GetId();
+            }
+
+            std::cout << "    ";
+        }
+
+        std::cout << std::endl;
+    }
+
+    std::cout << std::endl;
+}
+
+//----------------------------------------------------------------------
+// Print player seats
+//
+void Generator::PrintPlayers()
+{
+    // Print header
+    //
+    std::cout << "     ";
+    for (unsigned game = 0; game < PerTableGameCount; ++game)
+    {
+        std::cout << std::setw(6) << std::right << game + 1;
+    }
+    std::cout << std::endl;
+
+    // Print seats
+    //
+    for (unsigned playerNo = 0; playerNo < PlayerCount; ++playerNo)
+    {
+        // Output player ID
+        //
+        Player& player = allPlayers[playerNo];
+        std::cout << std::setw(4) << std::right << player.GetId() << "  ";
+
+        for (unsigned game = 0; game < PerTableGameCount; ++game)
+        {
+            std::cout << player[game] << " ";
+        }
+
+        std::cout << std::endl;
+    }
+
+    std::cout << std::endl;
 }

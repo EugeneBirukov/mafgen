@@ -33,6 +33,10 @@ public:
     //
     void AssignSeat(unsigned tableGame, Player* player);
 
+    // Game accessor
+    //
+    const Game& operator[](unsigned game);
+
 private:
 
     // table ID, starts from 1
