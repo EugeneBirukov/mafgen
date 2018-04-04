@@ -15,20 +15,20 @@ public:
 
     // Sentinel table/seat number which means the player has a break
     //
-    static constexpr unsigned Break = 0;
+    static constexpr uint64_t Break = 0;
 
     // The number of seats:
     //
-    static constexpr unsigned Seats = 10;
+    static constexpr uint64_t Seats = 10;
 
     // The number of zones:
     // 1..3, 4..7, 8..10
     //
-    static constexpr unsigned Zones = 3;
+    static constexpr uint64_t Zones = 3;
 
     // Get zone number 
     //
-    static unsigned GetZoneNo(unsigned seatNo);
+    static uint64_t GetZoneNo(uint64_t seatNo);
 
     // Default constructor
     //
@@ -36,7 +36,7 @@ public:
     
     // Constructor
     //
-    Seat(unsigned tableNo, unsigned seatNo);
+    Seat(uint64_t tableNo, uint64_t seatNo);
 
     // Destructor
     //
@@ -44,25 +44,25 @@ public:
 
     // Get table
     //
-    unsigned GetTable() const;
+    uint64_t GetTable() const;
 
     // Get seat
     //
-    unsigned GetSeat() const;
+    uint64_t GetSeat() const;
 
 private:
 
     // Seat zones: 1..3, 4..7, 8..10
     //
-    static unsigned zone[1 + Seat::Seats];
+    static uint64_t zone[1 + Seat::Seats];
 
     // Table No: Break, 1..tables
     //
-    unsigned table;
+    uint64_t table;
 
     // seat at the table: Break, 1..10
     //
-    unsigned seat;
+    uint64_t seat;
 };
 
 // Output operator

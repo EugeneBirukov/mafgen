@@ -11,11 +11,11 @@
 // Constructor
 //
 Generator::Generator(
-    unsigned playerCount,
-    unsigned tableCount,
-    unsigned perTableGameCount,
-    unsigned tableGameCount,
-    unsigned playerGameCount) :
+    uint64_t playerCount,
+    uint64_t tableCount,
+    uint64_t perTableGameCount,
+    uint64_t tableGameCount,
+    uint64_t playerGameCount) :
     PlayerCount(playerCount),
     TableCount(tableCount),
     PerTableGameCount(perTableGameCount),
@@ -30,14 +30,14 @@ Generator::Generator(
 {
     // Initialize all players
     //
-    for (unsigned index = 0; index < playerCount; ++index)
+    for (uint64_t index = 0; index < playerCount; ++index)
     {
         allPlayers[index].Initialize(index + 1);
     }
 
     // Initialize all tables
     //
-    for (unsigned index = 0; index < tableCount; ++index)
+    for (uint64_t index = 0; index < tableCount; ++index)
     {
         allTables[index].Initialize(index + 1);
     }
@@ -63,7 +63,7 @@ void Generator::Generate()
         // Note: in the last game some tables may be inactive.
         //
         playerMax = std::min(TableCount * Seat::Seats, SeatCount - seats);
-        unsigned tableMax = playerMax / Seat::Seats;
+        uint64_t tableMax = playerMax / Seat::Seats;
 
         // Select players for the game
         //
@@ -71,7 +71,7 @@ void Generator::Generate()
 
         // Assign players to tables
         //
-        for (unsigned i = 0; i < playerMax; ++i)
+        for (uint64_t i = 0; i < playerMax; ++i)
         {
             // Pick a random player
             //
@@ -79,21 +79,21 @@ void Generator::Generate()
 
             // Calculate table penalty
             //
-            unsigned currentPenalty = std::numeric_limits<unsigned>::max();
-            for (unsigned tableNo = 0; tableNo < tableMax; ++tableNo)
+            uint64_t currentPenalty = std::numeric_limits<uint64_t>::max();
+            for (uint64_t tableNo = 0; tableNo < tableMax; ++tableNo)
             {
                 Table* table = &allTables[tableNo];
-                unsigned penalty = table->GetPenalty(tableGame, player);
+                uint64_t penalty = table->GetPenalty(tableGame, player);
                 currentPenalty = std::min(penalty, currentPenalty);
             }
 
             // Choose table
             //
             Selector<Table*> tables;
-            for (unsigned tableNo = 0; tableNo < tableMax; ++tableNo)
+            for (uint64_t tableNo = 0; tableNo < tableMax; ++tableNo)
             {
                 Table* table = &allTables[tableNo];
-                unsigned penalty = table->GetPenalty(tableGame, player);
+                uint64_t penalty = table->GetPenalty(tableGame, player);
                 if (penalty == currentPenalty)
                 {
                     tables.push_back(table);
@@ -173,7 +173,7 @@ void Generator::PrintTables()
 {
     // Print header 1
     //
-    for (unsigned tableNo = 0; tableNo < TableCount; ++tableNo)
+    for (uint64_t tableNo = 0; tableNo < TableCount; ++tableNo)
     {
         std::cout << "TABLE " << std::setw(2) << tableNo + 1 << "                                    ";
     }
@@ -181,9 +181,9 @@ void Generator::PrintTables()
 
     // Print header 2
     //
-    for (unsigned tableNo = 0; tableNo < TableCount; ++tableNo)
+    for (uint64_t tableNo = 0; tableNo < TableCount; ++tableNo)
     {
-        for (unsigned seat = 0; seat < Seat::Seats; ++seat)
+        for (uint64_t seat = 0; seat < Seat::Seats; ++seat)
         {
             std::cout << std::setw(4) << seat + 1;
         }
@@ -194,9 +194,9 @@ void Generator::PrintTables()
 
     // Print header 3
     //
-    for (unsigned tableNo = 0; tableNo < TableCount; ++tableNo)
+    for (uint64_t tableNo = 0; tableNo < TableCount; ++tableNo)
     {                
-        for (unsigned seat = 0; seat < Seat::Seats; ++seat)
+        for (uint64_t seat = 0; seat < Seat::Seats; ++seat)
         {
             std::cout << "----";
         }
@@ -207,9 +207,9 @@ void Generator::PrintTables()
 
     // Print assignments
     //
-    for (unsigned game = 0; game < PerTableGameCount; ++game)
+    for (uint64_t game = 0; game < PerTableGameCount; ++game)
     {
-        for (unsigned tableNo = 0; tableNo < TableCount; ++tableNo)
+        for (uint64_t tableNo = 0; tableNo < TableCount; ++tableNo)
         {
             // Get table
             //
@@ -224,7 +224,7 @@ void Generator::PrintTables()
 
             // Print assignments
             //
-            for (unsigned seat = 0; seat < Seat::Seats; ++seat)
+            for (uint64_t seat = 0; seat < Seat::Seats; ++seat)
             {
                 std::cout << std::setw(4) << table[game][seat]->GetId();
             }
@@ -245,27 +245,122 @@ void Generator::PrintPlayers()
 {
     // Print header
     //
-    std::cout << "     ";
-    for (unsigned game = 0; game < PerTableGameCount; ++game)
+    std::cout << "PLAYER SCHEDULES" << std::endl;
+    std::cout << "     |";
+    for (uint64_t game = 0; game < PerTableGameCount; ++game)
     {
         std::cout << std::setw(6) << std::right << game + 1;
     }
     std::cout << std::endl;
 
+    std::cout << "-----+";
+    for (uint64_t game = 0; game < PerTableGameCount; ++game)
+    {
+        std::cout << "------";
+    }
+    std::cout << std::endl;
+
     // Print seats
     //
-    for (unsigned playerNo = 0; playerNo < PlayerCount; ++playerNo)
+    for (uint64_t playerNo = 0; playerNo < PlayerCount; ++playerNo)
     {
         // Output player ID
         //
-        Player& player = allPlayers[playerNo];
-        std::cout << std::setw(4) << std::right << player.GetId() << "  ";
+        const Player& player = allPlayers[playerNo];
+        std::cout << std::setw(4) << std::right << player.GetId() << " | ";
 
-        for (unsigned game = 0; game < PerTableGameCount; ++game)
+        // Print seats
+        //
+        for (uint64_t game = 0; game < PerTableGameCount; ++game)
         {
             std::cout << player[game] << " ";
         }
 
+        std::cout << std::endl;
+    }
+
+    std::cout << std::endl;
+}
+
+//----------------------------------------------------------------------
+// Print player seat penalties
+//
+void Generator::PrintSeatPenalties()
+{
+    // Print header
+    //
+    std::cout << "ZONE & SEAT FREQUENCY" << std::endl;
+    std::cout << "     |   1..3  4..7 8..10 |      1     2     3     4     5     6     7     8     9    10" << std::endl;
+    std::cout << "-----+--------------------+-------------------------------------------------------------" << std::endl;
+
+    // Print zone and seat penalties
+    //
+    for (uint64_t playerNo = 0; playerNo < PlayerCount; ++playerNo)
+    {
+        // Output player ID
+        //
+        const Player& player = allPlayers[playerNo];
+        std::cout << std::setw(4) << std::right << player.GetId() << " | ";
+
+        // Print zone penalties
+        //
+        for (uint64_t zone = 0; zone < Seat::Zones; ++zone)
+        {
+            std::cout << std::setw(6) << std::right << player.GetZonePenalty(zone);
+        }
+        std::cout << " | ";
+
+        // Print seat penalties
+        //
+        for (uint64_t seat = 0; seat < Seat::Seats; ++seat)
+        {
+            std::cout << std::setw(6) << std::right << player.GetSeatPenalty(seat);
+        }
+        std::cout << std::endl;
+    }
+
+    std::cout << std::endl;
+}
+
+//----------------------------------------------------------------------
+// Print cross-player penalties
+//
+void Generator::PrintPlayerPenalties()
+{
+    // Print header 1
+    //
+    std::cout << "CROSS-PLAYER FREQUENCY" << std::endl;
+    std::cout << "     |";
+    for (uint64_t cross = 0; cross < PlayerCount; ++cross)
+    {
+        std::cout << std::setw(4) << std::right << cross + 1;
+    }
+    std::cout << std::endl;
+
+    // Print header 2
+    //
+    std::cout << "-----+";
+    for (uint64_t cross = 0; cross < PlayerCount; ++cross)
+    {
+        std::cout << "----";
+    }
+    std::cout << std::endl;
+
+    // Print penalties
+    //
+    for (uint64_t playerNo = 0; playerNo < PlayerCount; ++playerNo)
+    {
+        // Output player ID
+        //
+        const Player& player = allPlayers[playerNo];
+        std::cout << std::setw(4) << std::right << player.GetId() << " |";
+
+        // Print player penalties
+        //
+        for (uint64_t cross = 0; cross < PlayerCount; ++cross)
+        {
+            std::cout << std::setw(4) << std::right << player.GetPlayerPenalty(&allPlayers[cross]);
+        }
         std::cout << std::endl;
     }
 

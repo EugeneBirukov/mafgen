@@ -10,7 +10,7 @@
 //----------------------------------------------------------------------
 // Seat zones: 1..3, 4..7, 8..10
 //
-unsigned Seat::zone[Seat::Seats + 1] =
+uint64_t Seat::zone[Seat::Seats + 1] =
 {
     0, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3
 };
@@ -27,7 +27,7 @@ Seat::Seat()
 //----------------------------------------------------------------------
 // Constructor
 //
-Seat::Seat(unsigned tableNo, unsigned seatNo)
+Seat::Seat(uint64_t tableNo, uint64_t seatNo)
 {
     table = tableNo;
     seat = seatNo;
@@ -43,7 +43,7 @@ Seat::~Seat()
 //----------------------------------------------------------------------
 // Get zone number
 //
-unsigned Seat::GetZoneNo(unsigned seatNo)
+uint64_t Seat::GetZoneNo(uint64_t seatNo)
 {
     return zone[seatNo];
 }
@@ -51,7 +51,7 @@ unsigned Seat::GetZoneNo(unsigned seatNo)
 //----------------------------------------------------------------------
 // Get table
 //
-unsigned Seat::GetTable() const
+uint64_t Seat::GetTable() const
 {
     return table;
 }
@@ -59,7 +59,7 @@ unsigned Seat::GetTable() const
 //----------------------------------------------------------------------
 // Get seat
 //
-unsigned Seat::GetSeat() const
+uint64_t Seat::GetSeat() const
 {
     return seat;
 }
@@ -75,7 +75,7 @@ std::ostream& operator<<(std::ostream& os, const Seat& seat)
     }
     else
     {
-        os << "Break";
+        os << "  -  ";
     }
 
     return os;

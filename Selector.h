@@ -32,7 +32,7 @@ public:
     {
         // Pick random index
         //
-        unsigned index = rand() % this->size();
+        uint64_t index = rand() % this->size();
 
         // Get the value at index
         //

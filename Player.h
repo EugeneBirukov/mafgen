@@ -15,7 +15,7 @@ public:
 
     // Constructor
     //
-    Player(unsigned playerCount, unsigned tableGameCount);
+    Player(uint64_t playerCount, uint64_t tableGameCount);
 
     // Destructor
     //
@@ -23,19 +23,19 @@ public:
 
     // Initialize player
     //
-    void Initialize(unsigned newId);
+    void Initialize(uint64_t newId);
 
     // Assign a seat for a game
     //
-    void AssignSeat(unsigned gameNo, unsigned tableNo, unsigned seatNo);
+    void AssignSeat(uint64_t gameNo, uint64_t tableNo, uint64_t seatNo);
 
-    // Get zone penalty for the seatNo
+    // Get seat and zone penalty for the seatNo
     //
-    unsigned GetSeatPenalty(unsigned seatNo) const;
+    uint64_t GetZoneSeatPenalty(uint64_t seatNo) const;
 
     // Get cross-player penalty
     //
-    unsigned GetPlayerPenalty(Player* player) const;
+    uint64_t GetPlayerPenalty(Player* player) const;
             
     // Increment cross-player penalty
     //
@@ -43,19 +43,27 @@ public:
 
     // Get game count
     //
-    unsigned GetGameCount() const;
+    uint64_t GetGameCount() const;
 
     // Get player ID
     //
-    unsigned GetId() const;
+    uint64_t GetId() const;
 
-    const Seat& operator[](unsigned game);
-    
+    const Seat& operator[](uint64_t game) const;
+
+    // Get zone penalty
+    //
+    uint64_t GetZonePenalty(uint64_t zone) const;
+
+    // Get seat penalty
+    //
+    uint64_t GetSeatPenalty(uint64_t seat) const;
+
 private:
 
     // Player ID, starts from 1
     //
-    unsigned id;
+    uint64_t id;
 
     // Seat assignments for the tournament
     //
@@ -63,18 +71,18 @@ private:
 
     // Accumulated cross-player penalty
     //
-    std::vector<unsigned> playerPenalty;
+    std::vector<uint64_t> playerPenalty;
 
     // Accumulated zone penalty
     //
-    unsigned zonePenalty[Seat::Zones];
+    uint64_t zonePenalty[Seat::Zones];
 
     // Accumulated seat penalty
     //
-    unsigned seatPenalty[Seat::Seats];
+    uint64_t seatPenalty[Seat::Seats];
 
     // Games assigned
     //
-    unsigned gameCount;
+    uint64_t gameCount;
 };
 

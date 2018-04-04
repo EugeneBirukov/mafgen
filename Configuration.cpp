@@ -31,7 +31,7 @@ Configuration::Configuration()
     tables = 1;
     tableGames = 1;
     playerGames = 1;
-    seed = static_cast<unsigned>(time(nullptr));
+    seed = static_cast<uint64_t>(time(nullptr));
 }
 
 //----------------------------------------------------------------------
@@ -81,8 +81,8 @@ bool Configuration::Parse(int argc, char ** argv)
 
     // Calculate the minimum number of games per player
     //
-    unsigned minGames = players;
-    unsigned minPlayerGames = 10;
+    uint64_t minGames = players;
+    uint64_t minPlayerGames = 10;
     if (players % 2 == 0)
     {
         minGames /= 2;
@@ -96,7 +96,7 @@ bool Configuration::Parse(int argc, char ** argv)
 
     // Calculate the number of rounds and player games
     //
-    unsigned rounds = tableGames / minGames;
+    uint64_t rounds = tableGames / minGames;
     playerGames = rounds * minPlayerGames;
 
     // Check sanity
@@ -151,7 +151,7 @@ void Configuration::PrintUsage()
 //----------------------------------------------------------------------
 // Get the number of players
 //
-unsigned Configuration::GetPlayers() const
+uint64_t Configuration::GetPlayers() const
 {
     return players;
 }
@@ -159,7 +159,7 @@ unsigned Configuration::GetPlayers() const
 //----------------------------------------------------------------------
 // Get the number of tables
 //
-unsigned Configuration::GetTables() const
+uint64_t Configuration::GetTables() const
 {
     return tables;
 }
@@ -167,7 +167,7 @@ unsigned Configuration::GetTables() const
 //----------------------------------------------------------------------
 // Get the number of table games
 //
-unsigned Configuration::GetTableGames() const
+uint64_t Configuration::GetTableGames() const
 {
     return tableGames;
 }
@@ -175,7 +175,7 @@ unsigned Configuration::GetTableGames() const
 //----------------------------------------------------------------------
 // Get the number of per-table games
 //
-unsigned Configuration::GetPerTableGames() const
+uint64_t Configuration::GetPerTableGames() const
 {
     // Some tables might be empty during last game
     //
@@ -185,7 +185,7 @@ unsigned Configuration::GetPerTableGames() const
 //----------------------------------------------------------------------
 // Get the number of per-table games
 //
-unsigned Configuration::GetPlayerGames() const
+uint64_t Configuration::GetPlayerGames() const
 {
     return playerGames;
 }
@@ -193,7 +193,7 @@ unsigned Configuration::GetPlayerGames() const
 //----------------------------------------------------------------------
 // Get RNG seed
 //
-unsigned Configuration::GetSeed() const
+uint64_t Configuration::GetSeed() const
 {
     return seed;
 }

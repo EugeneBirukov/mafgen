@@ -12,7 +12,7 @@
 //----------------------------------------------------------------------
 // Constructor
 //
-Player::Player(unsigned playerCount, unsigned perTableGameCount) :
+Player::Player(uint64_t playerCount, uint64_t perTableGameCount) :
     seats(perTableGameCount),
     id(0),
     gameCount(0),
@@ -20,14 +20,14 @@ Player::Player(unsigned playerCount, unsigned perTableGameCount) :
 {
     // Initialize zonePenalty array
     //
-    for (unsigned zone = 0; zone < Seat::Zones; ++zone)
+    for (uint64_t zone = 0; zone < Seat::Zones; ++zone)
     {
         zonePenalty[zone] = 0;
     }
 
     // Initialize seatPenalty array
     //
-    for (unsigned seat = 0; seat < Seat::Seats; ++seat)
+    for (uint64_t seat = 0; seat < Seat::Seats; ++seat)
     {
         seatPenalty[seat] = 0;
     }
@@ -43,7 +43,7 @@ Player::~Player()
 //----------------------------------------------------------------------
 // Initialize player
 //
-void Player::Initialize(unsigned newId)
+void Player::Initialize(uint64_t newId)
 {
     assert(id == 0);
     id = newId;
@@ -52,7 +52,7 @@ void Player::Initialize(unsigned newId)
 //----------------------------------------------------------------------
 // Assign seat for a game
 //
-void Player::AssignSeat(unsigned game, unsigned tableNo, unsigned seatNo)
+void Player::AssignSeat(uint64_t game, uint64_t tableNo, uint64_t seatNo)
 {
     assert(seatNo != Seat::Break);
 
@@ -73,17 +73,17 @@ void Player::AssignSeat(unsigned game, unsigned tableNo, unsigned seatNo)
 //----------------------------------------------------------------------
 // Get zone penalty for the seatNo
 //
-unsigned Player::GetSeatPenalty(unsigned seat) const
+uint64_t Player::GetZoneSeatPenalty(uint64_t seat) const
 {
-    unsigned seatNo = seat + 1;
-    unsigned zoneNo = Seat::GetZoneNo(seatNo);
+    uint64_t seatNo = seat + 1;
+    uint64_t zoneNo = Seat::GetZoneNo(seatNo);
     return zonePenalty[zoneNo - 1] + seatPenalty[seatNo - 1];
 }
 
 //----------------------------------------------------------------------
 // Get cross-player penalty
 //
-unsigned Player::GetPlayerPenalty(Player* player) const
+uint64_t Player::GetPlayerPenalty(Player* player) const
 {
     return playerPenalty[player->GetId() - 1];
 }
@@ -100,7 +100,7 @@ void Player::AddPlayerPenalty(Player* player)
 //----------------------------------------------------------------------
 // Get game count
 //
-unsigned Player::GetGameCount() const
+uint64_t Player::GetGameCount() const
 {
     return gameCount;
 }
@@ -108,7 +108,7 @@ unsigned Player::GetGameCount() const
 //----------------------------------------------------------------------
 // Get player ID
 //
-unsigned Player::GetId() const
+uint64_t Player::GetId() const
 {
     return id;
 }
@@ -116,7 +116,23 @@ unsigned Player::GetId() const
 //----------------------------------------------------------------------
 // Seat accessor
 //
-const Seat& Player::operator[](unsigned game)
+const Seat& Player::operator[](uint64_t game) const
 {
     return seats[game];
+}
+
+//----------------------------------------------------------------------
+// Get zone penalty for the seat
+//
+uint64_t Player::GetZonePenalty(uint64_t zone) const
+{
+    return zonePenalty[zone];
+}
+
+//----------------------------------------------------------------------
+// Get seat penalty for the seat
+//
+uint64_t Player::GetSeatPenalty(uint64_t seat) const
+{
+    return seatPenalty[seat];
 }

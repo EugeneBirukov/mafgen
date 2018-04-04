@@ -15,7 +15,7 @@ public:
 
     // Constructor
     //
-    Table(unsigned perTableGameCount);
+    Table(uint64_t perTableGameCount);
 
     // Destructor
     //
@@ -23,25 +23,25 @@ public:
 
     // Initialize table
     //
-    void Initialize(unsigned newId);
+    void Initialize(uint64_t newId);
 
     // Get penalty for placing the player at this table
     //
-    unsigned GetPenalty(unsigned tableGame, Player* player);
+    uint64_t GetPenalty(uint64_t tableGame, Player* player);
 
     // Assign the player to the table
     //
-    void AssignSeat(unsigned tableGame, Player* player);
+    void AssignSeat(uint64_t tableGame, Player* player);
 
     // Game accessor
     //
-    const Game& operator[](unsigned game);
+    const Game& operator[](uint64_t game);
 
 private:
 
     // table ID, starts from 1
     //
-    unsigned id;
+    uint64_t id;
 
     // All the games at this table
     // Note: some tables may have last game empty 

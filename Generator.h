@@ -16,11 +16,11 @@ public:
     // Constructor
     //
     Generator(
-        unsigned players,
-        unsigned tables,
-        unsigned perTableGames,
-        unsigned tableGames,
-        unsigned playerGames);
+        uint64_t players,
+        uint64_t tables,
+        uint64_t perTableGames,
+        uint64_t tableGames,
+        uint64_t playerGames);
     
     // Destructor
     //
@@ -38,11 +38,19 @@ public:
     //
     void PrintPlayers();
 
+    // Print player seat penalties
+    //
+    void PrintSeatPenalties();
+
+    // Print cross-player penalties
+    //
+    void PrintPlayerPenalties();
+
 private:
 
     // The type for the list of players
     //
-    using Players = std::vector<unsigned>;
+    using Players = std::vector<uint64_t>;
 
     // Get players who has not played 'playerGame'
     //
@@ -62,43 +70,43 @@ private:
 
     // The number of players
     //
-    const unsigned PlayerCount;
+    const uint64_t PlayerCount;
 
     // The number of tables
     //
-    const unsigned TableCount;
+    const uint64_t TableCount;
 
     // The number of games per table
     // 
-    const unsigned PerTableGameCount;
+    const uint64_t PerTableGameCount;
 
     // The number of table games
     //
-    const unsigned TableGameCount;
+    const uint64_t TableGameCount;
 
     // The number of player games
     //
-    const unsigned PlayerGameCount;
+    const uint64_t PlayerGameCount;
 
     // The number of seats to generate
     //
-    const unsigned SeatCount;
+    const uint64_t SeatCount;
 
     // Current seat
     //
-    unsigned seats;
+    uint64_t seats;
 
     // Current player's game being generated
     //
-    unsigned playerGame;
+    uint64_t playerGame;
 
     // Current per-table game being generated
     //
-    unsigned tableGame;
+    uint64_t tableGame;
 
     // The number of players to play simultaneously at all tables
     // Note: in the last game some tables may be inactive.
     //
-    unsigned playerMax;
+    uint64_t playerMax;
 };
 

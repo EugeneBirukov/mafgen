@@ -10,7 +10,7 @@
 //----------------------------------------------------------------------
 // Constructor
 //
-Table::Table(unsigned perTableGameCount) :
+Table::Table(uint64_t perTableGameCount) :
     id(0),
     allGames(perTableGameCount)
 {
@@ -26,7 +26,7 @@ Table::~Table()
 //----------------------------------------------------------------------
 // Initialize table
 //
-void Table::Initialize(unsigned newId)
+void Table::Initialize(uint64_t newId)
 {
     assert(id == 0);
     id = newId;
@@ -35,13 +35,13 @@ void Table::Initialize(unsigned newId)
 //----------------------------------------------------------------------
 // Get penalty for placing the player at this table
 //
-unsigned Table::GetPenalty(unsigned tableGame, Player* player)
+uint64_t Table::GetPenalty(uint64_t tableGame, Player* player)
 {
-    unsigned penalty = 0;
+    uint64_t penalty = 0;
     Game& game = allGames[tableGame];
-    unsigned freeCount = 0;
+    uint64_t freeCount = 0;
 
-    for (unsigned seat = 0; seat < Seat::Seats; ++seat)
+    for (uint64_t seat = 0; seat < Seat::Seats; ++seat)
     {
         Player* p = game[seat];
         if (p != nullptr)
@@ -54,26 +54,26 @@ unsigned Table::GetPenalty(unsigned tableGame, Player* player)
         }
     }
 
-    return freeCount > 0 ? penalty : std::numeric_limits<unsigned>::max();
+    return freeCount > 0 ? penalty : std::numeric_limits<uint64_t>::max();
 }
 
 //----------------------------------------------------------------------
 // Assign the player to the table
 //
-void Table::AssignSeat(unsigned tableGame, Player* player)
+void Table::AssignSeat(uint64_t tableGame, Player* player)
 {
     Game& game = allGames[tableGame];
 
     // Scan current seats state
     //
-    unsigned currentPenalty = std::numeric_limits<unsigned>::max();
-    for (unsigned seat = 0; seat < Seat::Seats; ++seat)
+    uint64_t currentPenalty = std::numeric_limits<uint64_t>::max();
+    for (uint64_t seat = 0; seat < Seat::Seats; ++seat)
     {
         if (game[seat] == nullptr)
         {
             // Calculate minimal possible zone penalty
             //
-            unsigned penalty = player->GetSeatPenalty(seat);
+            uint64_t penalty = player->GetZoneSeatPenalty(seat);
             currentPenalty = std::min(penalty, currentPenalty);
         }
         else
@@ -86,10 +86,10 @@ void Table::AssignSeat(unsigned tableGame, Player* player)
 
     // Collect possible seats
     //
-    Selector<unsigned> seats;
-    for (unsigned seat = 0; seat < Seat::Seats; ++seat)
+    Selector<uint64_t> seats;
+    for (uint64_t seat = 0; seat < Seat::Seats; ++seat)
     {
-        if (game[seat] == nullptr && currentPenalty == player->GetSeatPenalty(seat))
+        if (game[seat] == nullptr && currentPenalty == player->GetZoneSeatPenalty(seat))
         {
             seats.push_back(seat);
         }
@@ -97,8 +97,8 @@ void Table::AssignSeat(unsigned tableGame, Player* player)
 
     // Assign the seat
     //
-    unsigned seat = seats.PickOne();
-    unsigned seatNo = seat + 1;
+    uint64_t seat = seats.PickOne();
+    uint64_t seatNo = seat + 1;
     player->AssignSeat(tableGame, id, seatNo);
     game[seat] = player;
 }
@@ -106,7 +106,7 @@ void Table::AssignSeat(unsigned tableGame, Player* player)
 //----------------------------------------------------------------------
 // Game accessor
 //
-const Game& Table::operator[](unsigned game)
+const Game& Table::operator[](uint64_t game)
 {
     return allGames[game];
 }

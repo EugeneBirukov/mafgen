@@ -12,7 +12,7 @@
 //
 Game::Game()
 {
-    for (unsigned seat = 0; seat < 10; ++seat)
+    for (uint64_t seat = 0; seat < 10; ++seat)
     {
         players[seat] = nullptr;
     }
@@ -28,7 +28,7 @@ Game::~Game()
 //----------------------------------------------------------------------
 // Player accessor
 //
-Player*& Game::operator[](unsigned seat)
+Player*& Game::operator[](uint64_t seat)
 {
     return players[seat];
 }
@@ -36,7 +36,7 @@ Player*& Game::operator[](unsigned seat)
 //----------------------------------------------------------------------
 // Player accessor
 //
-const Player* Game::operator[](unsigned seat) const
+const Player* Game::operator[](uint64_t seat) const
 {
     return players[seat];
 }

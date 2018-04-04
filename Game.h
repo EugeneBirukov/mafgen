@@ -23,11 +23,11 @@ public:
 
     // Player accessor
     //
-    Player*& operator[](unsigned seat);
+    Player*& operator[](uint64_t seat);
 
     // Player accessor
     //
-    const Player* operator[](unsigned seat) const;
+    const Player* operator[](uint64_t seat) const;
 
 private:
 

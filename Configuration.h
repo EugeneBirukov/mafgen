@@ -19,7 +19,7 @@ private:
     {
         std::string               shortKey;
         std::string               longKey;
-        unsigned Configuration::* field;
+        uint64_t Configuration::* field;
         std::string               description;
     };
 
@@ -49,35 +49,35 @@ public:
 
     // Get the number of players
     //
-    unsigned GetPlayers() const;
+    uint64_t GetPlayers() const;
 
     // Get the number of tables
     //
-    unsigned GetTables() const;
+    uint64_t GetTables() const;
 
     // Get the number of table games
     //
-    unsigned GetTableGames() const;
+    uint64_t GetTableGames() const;
 
     // Get the number of per-table games
     //
-    unsigned GetPerTableGames() const;
+    uint64_t GetPerTableGames() const;
 
     // Get the number of player games
     //
-    unsigned GetPlayerGames() const;
+    uint64_t GetPlayerGames() const;
 
     // Get RNG seed
     //
-    unsigned GetSeed() const;
+    uint64_t GetSeed() const;
 
 private:
 
-    unsigned players;       // The number of players
-    unsigned tables;        // The number of tables played simultaneously
-    unsigned tableGames;    // The number of games
-    unsigned playerGames;   // The number of games per player
-    unsigned seed;          // The random number generator seed
+    uint64_t players;       // The number of players
+    uint64_t tables;        // The number of tables played simultaneously
+    uint64_t tableGames;    // The number of games
+    uint64_t playerGames;   // The number of games per player
+    uint64_t seed;          // The random number generator seed
     static Key keys[];      // The parser data
 };
 
