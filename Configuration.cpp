@@ -203,7 +203,7 @@ uint64_t Configuration::GetSeed() const
 //
 uint64_t Configuration::GetMaxZeroes() const
 {
-    return uint64_t();
+    return maxZeroes;
 }
 
 //----------------------------------------------------------------------

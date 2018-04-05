@@ -176,7 +176,8 @@ void Generator::PrintTables()
     std::cout << "       | ";
     for (uint64_t tableNo = 0; tableNo < TableCount; ++tableNo)
     {
-        std::cout << "TABLE " << std::setw(2) << tableNo + 1 << "                                    ";
+        std::cout << "TABLE " << std::setw(2) << tableNo + 1 << 
+            "                                    ";
     }
     std::cout << std::endl;
 
@@ -212,7 +213,7 @@ void Generator::PrintTables()
     //
     for (uint64_t game = 0; game < PerTableGameCount; ++game)
     {
-        std::cout << std::setw(6) << game << " | ";
+        std::cout << std::setw(6) << game + 1 << " | ";
         for (uint64_t tableNo = 0; tableNo < TableCount; ++tableNo)
         {
             // Get table
