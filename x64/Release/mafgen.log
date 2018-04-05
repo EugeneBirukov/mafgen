@@ -1,0 +1,12 @@
+﻿  stdafx.cpp
+  Configuration.cpp
+  Game.cpp
+  Generator.cpp
+  mafgen.cpp
+  Player.cpp
+  Seat.cpp
+  Table.cpp
+  Generating code
+  All 604 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  mafgen.vcxproj -> C:\Users\Eugene\src\mafgen\x64\Release\mafgen.exe

@@ -16,7 +16,7 @@ Configuration::Key Configuration::keys[] =
     {"-t", "--tables",  &Configuration::tables,     "The number of tables played simultaneously"},
     {"-g", "--games",   &Configuration::tableGames, "The number of games per tournament"},
     {"-s", "--seed",    &Configuration::seed,       "The random number seed"},
-    {"-z", "--zeroes",  &Configuration::maxZeroes,  "The maximum number of players that do not play together"},
+    {"-z", "--zeroes",  &Configuration::maxZeroes,  "The maximum number of player pairs that do not play together"},
 };
 
 const size_t Configuration::KeyCount = sizeof(Configuration::keys) / sizeof(Configuration::keys[0]);
