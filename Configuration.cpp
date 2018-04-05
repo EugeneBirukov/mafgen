@@ -214,7 +214,13 @@ void Configuration::PrintConfiguration()
     std::cout << "Configuration:" << std::endl;
     for (int keyNo = 0; keyNo < KeyCount; ++keyNo)
     {
-        std::cout << std::setw(12) << this->*keys[keyNo].field << " : " << keys[keyNo].description << std::endl;
+        std::cout << 
+            keys[keyNo].shortKey << 
+            " " << 
+            std::setw(12) << this->*keys[keyNo].field << 
+            " : " << 
+            keys[keyNo].description << 
+            std::endl;
     }
     std::cout << std::endl;
 }

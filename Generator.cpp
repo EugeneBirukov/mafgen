@@ -173,6 +173,7 @@ void Generator::PrintTables()
 {
     // Print header 1
     //
+    std::cout << "       | ";
     for (uint64_t tableNo = 0; tableNo < TableCount; ++tableNo)
     {
         std::cout << "TABLE " << std::setw(2) << tableNo + 1 << "                                    ";
@@ -181,6 +182,7 @@ void Generator::PrintTables()
 
     // Print header 2
     //
+    std::cout << "  game | ";
     for (uint64_t tableNo = 0; tableNo < TableCount; ++tableNo)
     {
         for (uint64_t seat = 0; seat < Seat::Seats; ++seat)
@@ -194,6 +196,7 @@ void Generator::PrintTables()
 
     // Print header 3
     //
+    std::cout << "-------+-";
     for (uint64_t tableNo = 0; tableNo < TableCount; ++tableNo)
     {                
         for (uint64_t seat = 0; seat < Seat::Seats; ++seat)
@@ -209,6 +212,7 @@ void Generator::PrintTables()
     //
     for (uint64_t game = 0; game < PerTableGameCount; ++game)
     {
+        std::cout << std::setw(6) << game << " | ";
         for (uint64_t tableNo = 0; tableNo < TableCount; ++tableNo)
         {
             // Get table
@@ -245,15 +249,15 @@ void Generator::PrintPlayers()
 {
     // Print header
     //
-    std::cout << "PLAYER SCHEDULES" << std::endl;
-    std::cout << "     |";
+    std::cout << "       | game" << std::endl;
+    std::cout << "player |";
     for (uint64_t game = 0; game < PerTableGameCount; ++game)
     {
         std::cout << std::setw(6) << std::right << game + 1;
     }
     std::cout << std::endl;
 
-    std::cout << "-----+";
+    std::cout << "-------+-";
     for (uint64_t game = 0; game < PerTableGameCount; ++game)
     {
         std::cout << "------";
@@ -267,7 +271,7 @@ void Generator::PrintPlayers()
         // Output player ID
         //
         const Player& player = allPlayers[playerNo];
-        std::cout << std::setw(4) << std::right << player.GetId() << " | ";
+        std::cout << std::setw(6) << std::right << player.GetId() << " | ";
 
         // Print seats
         //
@@ -289,9 +293,9 @@ void Generator::PrintSeatPenalties()
 {
     // Print header
     //
-    std::cout << "ZONE & SEAT FREQUENCY" << std::endl;
-    std::cout << "     |   1..3  4..7 8..10 |      1     2     3     4     5     6     7     8     9    10" << std::endl;
-    std::cout << "-----+--------------------+-------------------------------------------------------------" << std::endl;
+    std::cout << "       | zone frequency     | seat frequency" << std::endl;
+    std::cout << "player |   1..3  4..7 8..10 |      1     2     3     4     5     6     7     8     9    10" << std::endl;
+    std::cout << "-------+--------------------+-------------------------------------------------------------" << std::endl;
 
     // Print zone and seat penalties
     //
@@ -300,7 +304,7 @@ void Generator::PrintSeatPenalties()
         // Output player ID
         //
         const Player& player = allPlayers[playerNo];
-        std::cout << std::setw(4) << std::right << player.GetId() << " | ";
+        std::cout << std::setw(6) << std::right << player.GetId() << " | ";
 
         // Print zone penalties
         //
@@ -329,8 +333,8 @@ void Generator::PrintPlayerPenalties()
 {
     // Print header 1
     //
-    std::cout << "CROSS-PLAYER FREQUENCY" << std::endl;
-    std::cout << "     |";
+    std::cout << "       | player frequency" << std::endl;
+    std::cout << "player |";
     for (uint64_t cross = 0; cross < PlayerCount; ++cross)
     {
         std::cout << std::setw(4) << std::right << cross + 1;
@@ -339,7 +343,7 @@ void Generator::PrintPlayerPenalties()
 
     // Print header 2
     //
-    std::cout << "-----+";
+    std::cout << "-------+";
     for (uint64_t cross = 0; cross < PlayerCount; ++cross)
     {
         std::cout << "----";
@@ -353,7 +357,7 @@ void Generator::PrintPlayerPenalties()
         // Output player ID
         //
         const Player& player = allPlayers[playerNo];
-        std::cout << std::setw(4) << std::right << player.GetId() << " |";
+        std::cout << std::setw(6) << std::right << player.GetId() << " |";
 
         // Print player penalties
         //
