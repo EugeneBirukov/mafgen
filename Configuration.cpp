@@ -12,10 +12,11 @@
 //
 Configuration::Key Configuration::keys[] =
 {
-    {"-p", "--players", &Configuration::players, "The number of players"},
-    {"-t", "--tables",  &Configuration::tables,  "The number of tables played simultaneously"},
-    {"-g", "--games",   &Configuration::tableGames,   "The number of games per tournament"},
-    {"-s", "--seed",    &Configuration::seed,    "The random number seed"},
+    {"-p", "--players", &Configuration::players,    "The number of players"},
+    {"-t", "--tables",  &Configuration::tables,     "The number of tables played simultaneously"},
+    {"-g", "--games",   &Configuration::tableGames, "The number of games per tournament"},
+    {"-s", "--seed",    &Configuration::seed,       "The random number seed"},
+    {"-z", "--zeroes",  &Configuration::maxZeroes,  "The maximum number of players that do not play together"},
 };
 
 const size_t Configuration::KeyCount = sizeof(Configuration::keys) / sizeof(Configuration::keys[0]);
@@ -23,15 +24,14 @@ const size_t Configuration::KeyCount = sizeof(Configuration::keys) / sizeof(Conf
 //----------------------------------------------------------------------
 // Constructor
 //
-Configuration::Configuration()
+Configuration::Configuration() :
+    players(10),
+    tables(1),
+    tableGames(1),
+    playerGames(1),
+    maxZeroes(0),
+    seed(time(nullptr))
 {
-    // Reasonablr default values
-    //
-    players = 10;
-    tables = 1;
-    tableGames = 1;
-    playerGames = 1;
-    seed = static_cast<uint64_t>(time(nullptr));
 }
 
 //----------------------------------------------------------------------
@@ -199,16 +199,22 @@ uint64_t Configuration::GetSeed() const
 }
 
 //----------------------------------------------------------------------
+// Get the maximum number of player pairs that did not play together
+//
+uint64_t Configuration::GetMaxZeroes() const
+{
+    return uint64_t();
+}
+
+//----------------------------------------------------------------------
 // Print configuration
 //
 void Configuration::PrintConfiguration()
 {
     std::cout << "Configuration:" << std::endl;
-    std::cout << "    Players:          " << std::setw(12) << std::right << players << std::endl;
-    std::cout << "    Tables:           " << std::setw(12) << std::right << tables << std::endl;
-    std::cout << "    Games:            " << std::setw(12) << std::right << tableGames << std::endl;
-    std::cout << "    Games per player: " << std::setw(12) << std::right << playerGames << std::endl;
-    std::cout << "    Games per table:  " << std::setw(12) << std::right << GetPerTableGames() << std::endl;
-    std::cout << "    RNG Seed:         " << std::setw(12) << std::right << seed << std::endl;
+    for (int keyNo = 0; keyNo < KeyCount; ++keyNo)
+    {
+        std::cout << std::setw(12) << this->*keys[keyNo].field << " : " << keys[keyNo].description << std::endl;
+    }
     std::cout << std::endl;
 }

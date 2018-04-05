@@ -62,7 +62,7 @@ void Player::AssignSeat(uint64_t game, uint64_t tableNo, uint64_t seatNo)
     
     // Add penalty for the seat and zone
     //
-    zonePenalty[Seat::GetZoneNo(seatNo) - 1] += 4;
+    ++zonePenalty[Seat::GetZoneNo(seatNo) - 1];
     ++seatPenalty[seatNo - 1];
 
     // Done with this game
@@ -77,7 +77,7 @@ uint64_t Player::GetZoneSeatPenalty(uint64_t seat) const
 {
     uint64_t seatNo = seat + 1;
     uint64_t zoneNo = Seat::GetZoneNo(seatNo);
-    return zonePenalty[zoneNo - 1] + seatPenalty[seatNo - 1];
+    return zonePenalty[zoneNo - 1] * 4 + seatPenalty[seatNo - 1];
 }
 
 //----------------------------------------------------------------------

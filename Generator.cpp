@@ -366,3 +366,25 @@ void Generator::PrintPlayerPenalties()
 
     std::cout << std::endl;
 }
+
+//----------------------------------------------------------------------
+// Get the number of cross-player zeroes
+//
+uint64_t Generator::CountZeroes()
+{
+    uint64_t count = 0;
+
+    for (uint64_t playerNo = 0; playerNo < PlayerCount; ++playerNo)
+    {
+        const Player& player = allPlayers[playerNo];
+        for (uint64_t cross = 0; cross < player.GetId() - 1; ++cross)
+        {
+            if (player.GetPlayerPenalty(&allPlayers[cross]) == 0)
+            {
+                ++count;
+            }
+        }
+    }
+
+    return count;
+}

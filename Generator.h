@@ -46,6 +46,10 @@ public:
     //
     void PrintPlayerPenalties();
 
+    // Get the number of cross-player zeroes
+    //
+    uint64_t CountZeroes();
+
 private:
 
     // The type for the list of players

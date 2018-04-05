@@ -71,6 +71,10 @@ public:
     //
     uint64_t GetSeed() const;
 
+    // Get the maximum number of player pairs that did not play together
+    //
+    uint64_t GetMaxZeroes() const;
+
 private:
 
     uint64_t players;       // The number of players
@@ -78,6 +82,7 @@ private:
     uint64_t tableGames;    // The number of games
     uint64_t playerGames;   // The number of games per player
     uint64_t seed;          // The random number generator seed
+    uint64_t maxZeroes;     // The maximum number of player pairs that did not play together
     static Key keys[];      // The parser data
 };
 
