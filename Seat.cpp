@@ -71,7 +71,7 @@ std::ostream& operator<<(std::ostream& os, const Seat& seat)
 {
     if (seat.GetTable() != 0)
     {
-        os << std::setw(2) << std::right << seat.GetTable() << "/" << std::setw(2) << std::left << seat.GetSeat();
+        os << std::setw(2) << std::right << (char)('A' + seat.GetTable() - 1) << "/" << std::setw(2) << std::left << seat.GetSeat();
     }
     else
     {

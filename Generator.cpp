@@ -176,7 +176,7 @@ void Generator::PrintTables()
     std::cout << "       | ";
     for (uint64_t tableNo = 0; tableNo < TableCount; ++tableNo)
     {
-        std::cout << "TABLE " << std::setw(2) << tableNo + 1 << 
+        std::cout << "TABLE " << std::setw(2) << (char)(tableNo + 'A') << 
             "                                    ";
     }
     std::cout << std::endl;
