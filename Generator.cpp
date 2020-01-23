@@ -393,3 +393,27 @@ uint64_t Generator::CountZeroes()
 
     return count;
 }
+
+//----------------------------------------------------------------------
+// Count seat doubles
+//
+uint64_t Generator::CountDoubles()
+{
+	// Find max seat penalty
+	//
+    uint64_t count = 0;
+	for (uint64_t playerNo = 0; playerNo < PlayerCount; ++playerNo)
+	{
+        const Player& player = allPlayers[playerNo];
+        for (uint64_t seat = 0; seat < Seat::Seats; ++seat)
+		{
+            if (player.GetSeatPenalty(seat) > 1)
+            {
+                ++count;
+            }
+		}
+	}
+
+    return count;
+}
+

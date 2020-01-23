@@ -50,6 +50,10 @@ public:
     //
     uint64_t CountZeroes();
 
+	// Count seat doubles
+	//
+	uint64_t CountDoubles();
+
 private:
 
     // The type for the list of players
